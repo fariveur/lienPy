@@ -3,13 +3,27 @@ import requests
 
 app = Flask(__name__)
 
-WEBHOOK_URL = "https://discord.com/api/webhooks/1550941768952844418/wMfHfY4Q3-OStrMILnaB1XkRjURjERSVoDlP4pKLHooJ8Tk8mSRUmwL-bnW3gIyzCbc0"
+WEBHOOK_URL = "TON_NOUVEAU_WEBHOOK"
 
 @app.route('/com')
 def executer_script():
-    print("remote_addr :", request.remote_addr)
-    print("X-Forwarded-For :", request.headers.get("X-Forwarded-For"))
-    print("X-Real-IP :", request.headers.get("X-Real-IP"))
+    remote_addr = request.remote_addr
+    forwarded_for = request.headers.get("X-Forwarded-For")
+    real_ip = request.headers.get("X-Real-IP")
+
+    message = (
+        f"Nouvelle requête reçue\n"
+        f"remote_addr : {remote_addr}\n"
+        f"X-Forwarded-For : {forwarded_for}\n"
+        f"X-Real-IP : {real_ip}"
+    )
+
+    requests.post(
+        WEBHOOK_URL,
+        json={"content": message}
+    )
+
+    print(message)
 
     return "OK"
 
