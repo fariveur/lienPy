@@ -7,17 +7,11 @@ WEBHOOK_URL = "https://discord.com/api/webhooks/1550941768952844418/wMfHfY4Q3-OS
 
 @app.route('/com')
 def executer_script():
-    ip = request.remote_addr
+    print("remote_addr :", request.remote_addr)
+    print("X-Forwarded-For :", request.headers.get("X-Forwarded-For"))
+    print("X-Real-IP :", request.headers.get("X-Real-IP"))
 
-    print("IP du client :", ip)
-
-    requests.post(WEBHOOK_URL, json={
-        "content": f"Nouvelle IP : {ip}"
-    })
-
-    print("Le script s'est exécuté !")
-
-    return "Script exécuté avec succès !"
+    return "OK"
 
 
 if __name__ == '__main__':
